@@ -42,6 +42,7 @@ final class MySQLUserRepository implements UserRepository
         $statement->bindParam('phoneNumber', $phoneNumber, PDO::PARAM_STR);
         $statement->bindParam('profilePic', $profilePic, PDO::PARAM_STR);
         $statement->bindParam('createdAt', $createdAt, PDO::PARAM_STR);
+        $statement->bindParam('wallet', "30.0", PDO::PARAM_STR);
         $statement->bindParam('updatedAt', $updatedAt, PDO::PARAM_STR);
 
         $statement->execute();
@@ -59,7 +60,7 @@ final class MySQLUserRepository implements UserRepository
         $count = $statement->rowCount();
         if ($count > 0) {
             $row = $statement->fetch(PDO::FETCH_ASSOC);
-            return new User(intval($row['id']), $row['email'], $row['password'], $row['username'], $row['phoneNumber'], $row['profilePic'], DateTime::createFromFormat("Y-m-d H:i:s", $row['createdAt']), DateTime::createFromFormat("Y-m-d H:i:s", $row['updatedAt']));
+            return new User(intval($row['id']), $row['email'], $row['password'], $row['username'], $row['phoneNumber'],  $row['wallet'], $row['profilePic'], DateTime::createFromFormat("Y-m-d H:i:s", $row['createdAt']), DateTime::createFromFormat("Y-m-d H:i:s", $row['updatedAt']));
         }
         return null;
     }
@@ -151,6 +152,17 @@ final class MySQLUserRepository implements UserRepository
 
         $statement = $this->databaseConnection->prepare($query);
         $statement->bindParam('password', $newPassword, PDO::PARAM_STR);
+        $statement->bindParam('email', $userEmail, PDO::PARAM_STR);
+        return $statement->execute();
+    }
+
+    public function updateWallet(string $userEmail, string $wallet){
+        $query = <<<'QUERY'
+        UPDATE users SET wallet = :wallet WHERE email = :email
+        QUERY;
+
+        $statement = $this->databaseConnection->prepare($query);
+        $statement->bindParam('wallet', $wallet, PDO::PARAM_STR);
         $statement->bindParam('email', $userEmail, PDO::PARAM_STR);
         return $statement->execute();
     }

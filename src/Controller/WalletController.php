@@ -31,7 +31,25 @@ final class WalletController {
             $response,
             'wallet.twig',
             [
+                'wallet' => $_SESSION['wallet']
             ]
         );
+    }
+
+    public function updateWallet(Request $request, Response $response): Response{
+
+        $data = $request->getParsedBody();
+        $_SESSION['wallet'] = floatval($data['resultat']);
+
+        $this->userRepository->updateWallet($_SESSION['email'], $data['resultat']);
+
+        return $this->twig->render(
+            $response,
+            'wallet.twig',
+            [
+                'wallet' => $_SESSION['wallet']
+            ]
+        );
+
     }
 }

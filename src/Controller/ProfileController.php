@@ -61,27 +61,35 @@ final class ProfileController {
         $fileTmpName = $_FILES['newProfilePic']['tmp_name'];
         $ext = pathinfo($_FILES['newProfilePic']['name'], PATHINFO_EXTENSION);
 
+        $error = false;
+
         $myuuid = Uuid::uuid4();    //Generate random UUID
         $uploadPath = $currentDirectory . $uploadDirectory . $myuuid;
 
         if (!in_array($ext, $fileExtensionsAllowed)) {
             $this->flash->addMessage('error', 'This file extension is not allowed. Please upload a JPG or PNG file');
+            $error = true;
         }
 
         if ($fileSize > 1000000) {
             $this->flash->addMessage('error', 'File exceeds maximum size (1MB)');
+            $error = true;
         }
 
         if ($info[0] > 500 || $info[1] > 500) {
             $this->flash->addMessage('error', 'Image dimensions must be less or equal to 500x500');
+            $error = true;
         }
 
-        if (empty($errors)) {
+
+        if( $error == false ){
             move_uploaded_file($fileTmpName, $uploadPath);
             $this->userRepository->updateUserProfilePicture($_SESSION['email'], $myuuid->toString());
+            return $myuuid->toString();
+        }else{
+            return "";
         }
 
-        return $myuuid;
     }
 
     private function validatePhoneNumber(string $phoneNumber) {
@@ -94,19 +102,19 @@ final class ProfileController {
 
     public function updateProfileData(Request $request, Response $response): Response
     {
-        $errors = []; // Store errors here
+        $errors = [];
 
         if (isset($_POST['submit'])) {
-            //If no image has been added into the input field, retrieve the image previously stored on the DB
             if ($_FILES['newProfilePic']['size'] != 0){
                 $fileName = $this->updateProfilePicture($errors);
-                $imageDir = $fileName;
-                $_SESSION['picture'] = $fileName;
+                if(strlen($fileName) > 0){
+                    $imageDir = $fileName;
+                    $_SESSION['picture'] = $fileName;
+                }
             } else {
                 $imageDir = $this->userRepository->getPicByEmail($_SESSION['email']);
             }
 
-            //If no username has been added into the input field, retrieve the username previously stored on the DB
             if (isset($_POST['username'])) {
                 $this->userRepository->updateUsername($_SESSION['email'], $_POST['username']);
                 $username =  $_POST['username'];

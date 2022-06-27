@@ -52,77 +52,77 @@ $container->set('db', function () {
     );
 });
 
-$container->set('user_repository', function (ContainerInterface $container) {
+$container->set(UserRepository::class, function (ContainerInterface $container) {
     return new MySQLUserRepository($container->get('db'));
 });
 
 $container->set(
     HomeController::class,
     function (ContainerInterface $c) {
-        return new HomeController($c->get('view'), $c->get('user_repository'));
+        return new HomeController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     UserSessionController::class,
     function (ContainerInterface $c) {
-        return new UserSessionController($c->get('view'), $c->get('user_repository'));
+        return new UserSessionController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     SignUpController::class,
     function (ContainerInterface $c) {
-        return new SignUpController($c->get('view'), $c->get('user_repository'));
+        return new SignUpController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     ProfileController::class,
     function (ContainerInterface $c) {
-        return new ProfileController($c->get('view'), $c->get('user_repository'), $c->get('flash'));
+        return new ProfileController($c->get('view'), $c->get(UserRepository::class), $c->get('flash'));
     }
 );
 
 $container->set(
     BlogController::class,
     function (ContainerInterface $c) {
-        return new BlogController($c->get('view'), $c->get('user_repository'));
+        return new BlogController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     ExploreController::class,
     function (ContainerInterface $c) {
-        return new ExploreController($c->get('view'), $c->get('user_repository'));
+        return new ExploreController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     PortfolioController::class,
     function (ContainerInterface $c) {
-        return new PortfolioController($c->get('view'), $c->get('user_repository'));
+        return new PortfolioController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     WalletController::class,
     function (ContainerInterface $c) {
-        return new WalletController($c->get('view'), $c->get('user_repository'));
+        return new WalletController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     MembershipController::class,
     function (ContainerInterface $c) {
-        return new MembershipController($c->get('view'), $c->get('user_repository'));
+        return new MembershipController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 
 $container->set(
     PwdController::class,
     function (ContainerInterface $c) {
-        return new PwdController($c->get('view'), $c->get('user_repository'));
+        return new PwdController($c->get('view'), $c->get(UserRepository::class));
     }
 );
 

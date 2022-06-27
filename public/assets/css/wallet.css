@@ -1,0 +1,149 @@
+.calculator {
+  width: 500px;
+  height: 411px;
+  background: linear-gradient(135deg, #3A3F40, #071112);
+  box-shadow: 0 10px 28px #3A3F40;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+}
+
+.screen {
+  background: #fff;
+  padding: 15px 28px;
+  height: 69px;
+  text-align: right;
+  font-size: 34px;
+  font-weight: bold;
+  color: #4c455a;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 2px 3px #3A3F40;
+  transition: color .6s ease-in-out;
+}
+
+.pagina{
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+}
+
+.screen::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+#spinner{
+    display: none;
+}
+
+.buttons::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.buttons .numbers {
+    padding: 10px;
+}
+
+.buttons .numbers button {
+    width: 33.3333%;
+    padding: 4%;
+}
+
+
+.buttons button {
+    float: right;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px 10px;
+    outline: none;
+    text-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    focus: none!important;   
+}
+
+.buttons button:hover {
+    background: rgba(255, 255, 255, 0.1);;
+}
+
+.buttons button:active, .buttons button.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+}
+
+
+.botoSubmit {
+    width: 100%;
+    height: 60px;
+    padding: 0px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 0px 0px 14px 14px;
+    display: block;
+    border: 0px;
+    font-weight: 700;
+    background-image: linear-gradient(45deg, #3A3F40 0%, #071112  51%, #3A3F40  100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.botoSubmit:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.botoSubmit:active {
+    transform: scale(0.95);
+}
+
+.currWallet{
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.currWallet p{
+    font-family: "Montserrat", sans-serif;
+    color: black;
+    font-size: 40px;
+    line-height: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.currValue{
+    font-family: "Montserrat", sans-serif;
+    color: black;
+    font-size: 30px;
+    line-height: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.fila{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,5 +1,7 @@
 /vendor/
 .idea/
+public/uploads/*
+!public/uploads/default.png
 !public/uploads/.gitkeep
 .vscode/
 node_modules/

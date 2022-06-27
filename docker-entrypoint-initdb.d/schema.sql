@@ -15,6 +15,7 @@ CREATE TABLE users(
     phoneNumber VARCHAR(255) NOT NULL,
     profilePic VARCHAR(255) NOT NULL,
     membership INT DEFAULT 0,
+    DOUBLE NOT NULL DEFAULT 0,
     createdAt DATETIME NOT NULL,
     updatedAt DATETIME NOT NULL,
     PRIMARY KEY (id)

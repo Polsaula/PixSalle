@@ -16,4 +16,5 @@ interface UserRepository {
     public function updatePhoneNumber(string $userEmail, string $newPhoneNum);
     public function updatePassword(string $userEmail, string $newPassword);
     public function updateUsername(string $userEmail, string $newUsername);
+    public function updateWallet(string $userEmail, string $wallet);
 }

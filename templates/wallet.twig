@@ -3,8 +3,83 @@
 {% block title %}Wallet{% endblock %}
 
 {% block head %}
+   <link rel="stylesheet" type="text/css" href="/assets/css/wallet.css">
+
+   <script>
+
+    function updateScreen(value){
+        if( (value == '0' || value == '00') && document.getElementById('code').innerHTML == '0' ){
+            document.getElementById('code').innerHTML=document.getElementById('code').innerHTML;
+        }else{
+            if(document.getElementById('code').innerHTML != '0'){
+                document.getElementById('code').innerHTML=document.getElementById('code').innerHTML + value;
+            }else{
+                document.getElementById('code').innerHTML = value;
+            }
+        }    
+    }
+
+    function updateWallet(){
+        let def = 0;
+        let result =parseFloat(document.getElementById('result').innerHTML);
+        let curr =parseFloat(document.getElementById('code').innerHTML);
+        if(!isNaN(result) && isNaN(curr)){
+            def = result;
+        } else if(isNaN(result) && !isNaN(curr)){
+            def = curr;
+        } else if(!isNaN(result) && !isNaN(curr)){
+            def = result + curr;
+        }
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'resultat';
+        input.id= 'resultat';
+        input.value = def.toString();
+        document.getElementById('form-id').appendChild(input);
+        document.getElementById('form-id').submit();
+    }
+
+   </script>
 {% endblock %}
 
 {% block content %}
-    <h1>Wallet</h1>
+
+<form id="form-id" method="post" action="/user/wallet">
+
+    <div class="pagina">
+
+    <div class="currWallet">
+            <br>
+            <p>My Wallet</p>
+            <div name="result" class="currValue" id="result">{{ wallet }} €</div>
+        </div>
+
+        <div class="fila">
+                <div class="calculator">
+                    <div class="screen" id="code">0</div>
+                        <div class="buttons">
+                            <div class="numbers">
+                                <button type="button" onclick="updateScreen('9')" data-val="9">9</button>
+                                <button type="button" onclick="updateScreen('8')" data-val="8">8</button>
+                                <button type="button" onclick="updateScreen('7')" data-val="7">7</button>
+                                <button type="button" onclick="updateScreen('6')" data-val="6">6</button>
+                                <button type="button" onclick="updateScreen('5')" data-val="5">5</button>
+                                <button type="button" onclick="updateScreen('4')" data-val="4">4</button>
+                                <button type="button" onclick="updateScreen('3')" data-val="3">3</button>
+                                <button type="button" onclick="updateScreen('2')" data-val="2">2</button>
+                                <button type="button" onclick="updateScreen('1')" data-val="1">1</button>
+                                <button type="button" onclick="document.getElementById('code').innerHTML=document.getElementById('code').innerHTML.slice(0, -1);" data-val="clear">&#x2190;</button>
+                                <button type="button" onclick="updateScreen('0')" data-val="0">0</button>
+                                <button type="button" onclick="updateScreen('00')" data-val="00">00</button>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" class="botoSubmit" role="button" onclick="updateWallet()">Add to Wallet</button>
+                        </div>
+                </div>
+            
+        </div>
+    </div>
+</form>
+
 {% endblock %}

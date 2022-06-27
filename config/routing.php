@@ -95,3 +95,7 @@ $app->post(
     '/profile/changePassword',
     PwdController::class . ':updatePassword');
 
+$app->post(
+    '/user/wallet',
+    WalletController::class . ':updateWallet');
+

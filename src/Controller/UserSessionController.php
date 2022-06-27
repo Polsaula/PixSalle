@@ -58,6 +58,7 @@ class UserSessionController
                 $_SESSION['user_id'] = $user->id();
                 $_SESSION['username'] = $user->username();
                 $_SESSION['email'] = $user->email();
+                $_SESSION['wallet'] = strval($user->wallet());
                 $_SESSION['picture'] = $this->userRepository->getPicByEmail($_SESSION['email']);
                 if (strcmp($user->username(), "user") == 0){
                     $defUsername = "user" . $user->id();

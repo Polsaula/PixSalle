@@ -13,6 +13,7 @@ class User{
     private string $username;
     private string $phoneNumber;
     private string $profilePic;
+    private string $wallet;
     private Datetime $createdAt;
     private Datetime $updatedAt;
 
@@ -22,6 +23,7 @@ class User{
         string $password,
         string $username,
         string $phoneNumber,
+        string $wallet,
         string $profilePic,
         Datetime $createdAt,
         Datetime $updatedAt
@@ -31,6 +33,7 @@ class User{
         $this->password = $password;
         $this->username = $username;
         $this->phoneNumber = $phoneNumber;
+        $this->wallet = $wallet;
         $this->profilePic = $profilePic;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -59,6 +62,10 @@ class User{
 
     public function phoneNumber(): string{
         return $this->phoneNumber;
+    }
+
+    public function wallet(): float{
+        return floatval($this->wallet);
     }
 
     public function profilePic(): string{
