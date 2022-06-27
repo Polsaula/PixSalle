@@ -51,11 +51,15 @@ class UserSessionController
             $user = $this->userRepository->getUserByEmail($data['email']);
             if ($user == null) {
                 $errors['email'] = 'User with this email address does not exist.';
-            } else if ($user->password != md5($data['password'])) {
+            } else if ($user->password() != md5($data['password'])) {
                 $errors['password'] = 'Your email and/or password are incorrect.';
             } else {
-                $_SESSION['user_id'] = $user->id;
-                $_SESSION['email'] = $data['email'];
+                $_SESSION['user_id'] = $user->id();
+                $_SESSION['email'] = $user->email();
+                if (strcmp($user->username(), "user") == 0){
+                    $defUsername = "user" . $user->id();
+                    $this->userRepository->updateUsername($_SESSION['email'], $defUsername);
+                }
                 return $response->withHeader('Location','/')->withStatus(302);
             }
         }

@@ -14,9 +14,13 @@
                 <div class="profile-tab-nav border-right">
                     <div class="p-4">
                         <div class="img-circle text-center mb-3">
-                            <img src="{{ profilePic }}" alt="Image" class="shadow">
+                            {% if profilePic is not null %}
+                                <img src="/uploads/{{ profilePic }}" alt="Image" class="shadow">
+                            {% else %}
+                                <img src="/assets/img/blog/author.png" alt="Image" class="shadow">
+                            {% endif %}
                         </div>
-                        <h4 class="text-center">Pol Saula</h4>
+                        <h4 class="text-center">{{ username }}</h4>
                     </div>
                 </div>
                 <form class="tab-content p-4 p-md-5" action="/profile" method="post" enctype="multipart/form-data">
@@ -27,8 +31,9 @@
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input type="text"
+                                           name="username"
                                            class="form-control"
-                                           value="user{{ id }}">
+                                           value="{{ username }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -43,31 +48,41 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Phone number</label>
-                                    <input type="text" class="form-control" value="+34 630224480">
+                                    <input type="text"
+                                           name="phoneNumber"
+                                           class="form-control"
+                                           value="{{ phoneNumber }}">
                                 </div>
+                                {% if errors['phone']['phoneNumber'] %}
+                                    <h5 style="color: #ff0000; width: 100%">{{ errors['phone']['phoneNumber'] }}</h5>
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
                                 <label>Update Profile Picture</label>
                                 <div>
-                                    <input type="file" name="newProfilePic"  accept="image/png, image/jpg">
+                                    <input type="file" name="newProfilePic">
+                                    <br>
+                                    <br>
+                                    {% if errors['image']['ext'] %}
+                                        <h5 style="color: #ff0000; width: 100%">{{ errors['image']['ext'] }}</h5>
+                                    {% endif %}
+                                    {% if errors['image']['size'] %}
+                                        <h5 style="color: #ff0000; width: 100%">{{ errors['image']['size'] }}</h5>
+                                    {% endif %}
+                                    {% if errors['image']['res'] %}
+                                        <h5 style="color: #ff0000; width: 100%">{{ errors['image']['res'] }}</h5>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button type="submit">Update</button>
-                            <button>Cancel</button>
+                            <button name="submit" type="submit">Update</button>
+                            <button onclick="window.location.replace('/')" type="button">Cancel</button>
                         </div>
                         <br>
-                        <a href="">Change Password </a>
-
-                        <!-- Per comprovar coses -->
-                        {% if errors['aux'] %}
-                            <h5 style="color: #ff0000; width: 100%">{{ errors['aux'] }}</h5>
-                        {% endif %}
-
+                        <a href="/profile/changePassword" style="color: black">Change Password </a>
                     </div>
                 </form>
-
             </div>
         </div>
     </section>

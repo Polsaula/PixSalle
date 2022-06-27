@@ -6,10 +6,14 @@ namespace Salle\PixSalle\Repository;
 
 use Salle\PixSalle\Model\User;
 
-interface UserRepository
-{
+interface UserRepository {
     public function createUser(User $user): void;
     public function getUserByEmail(string $email);
     public function getUserMembership(string $userEmail): ?int;
     public function updateUserMembership(string $userEmail, int $newMembership): bool;
+    public function getPicByEmail(string $email);
+    public function updateUserProfilePicture(string $email, string $fileName);
+    public function updatePhoneNumber(string $userEmail, string $newPhoneNum);
+    public function updatePassword(string $userEmail, string $newPassword);
+    public function updateUsername(string $userEmail, string $newUsername);
 }

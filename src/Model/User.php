@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Salle\PixSalle\Model;
@@ -8,46 +7,69 @@ use DateTime;
 
 class User{
 
-  private int $id;
-  private string $email;
-  private string $password;
-  private Datetime $createdAt;
-  private Datetime $updatedAt;
+    private int $id;
+    private string $email;
+    private string $password;
+    private string $username;
+    private string $phoneNumber;
+    private string $profilePic;
+    private Datetime $createdAt;
+    private Datetime $updatedAt;
 
-  public function __construct(
-    string $email,
-    string $password,
-    Datetime $createdAt,
-    Datetime $updatedAt
-  ){
-    $this->email = $email;
-    $this->password = $password;
-    $this->createdAt = $createdAt;
-    $this->updatedAt = $updatedAt;
-  }
+    public function __construct(
+        ?int $id,
+        string $email,
+        string $password,
+        string $username,
+        string $phoneNumber,
+        string $profilePic,
+        Datetime $createdAt,
+        Datetime $updatedAt
+    ){
+        if($id !== null) $this->id = $id;
+        $this->email = $email;
+        $this->password = $password;
+        $this->username = $username;
+        $this->phoneNumber = $phoneNumber;
+        $this->profilePic = $profilePic;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+    }
 
-  public static function validMembershipValue($membership): bool{
-      if($membership == 0 || $membership == 1) return true;
-      return false;
-  }
+    public static function validMembershipValue($membership): bool{
+        if($membership == 0 || $membership == 1) return true;
+        return false;
+    }
 
-  public function id(){
-    return $this->id;
-  }
+    public function id(): int{
+        return $this->id;
+    }
 
-  public function email(){
-    return $this->email;
-  }
+    public function email(): string{
+        return $this->email;
+    }
 
-  public function password(){
-    return $this->password;
-  }
+    public function password(): string{
+        return $this->password;
+    }
 
-  public function createdAt(){
-    return $this->createdAt;
-  }
+    public function username(): string{
+        return $this->username;
+    }
 
-  public function updatedAt(){
-    return $this->updatedAt;
-  }
+    public function phoneNumber(): string{
+        return $this->phoneNumber;
+    }
+
+    public function profilePic(): string{
+        return $this->profilePic;
+    }
+
+    public function createdAt(): DateTime{
+        return $this->createdAt;
+    }
+
+    public function updatedAt(): DateTime{
+        return $this->updatedAt;
+    }
 }

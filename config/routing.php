@@ -10,6 +10,7 @@ use Salle\PixSalle\Controller\PortfolioController;
 use Salle\PixSalle\Controller\ProfileController;
 use Salle\PixSalle\Controller\SignUpController;
 use Salle\PixSalle\Controller\UserSessionController;
+use Salle\PixSalle\Controller\PwdController;
 use Salle\PixSalle\Controller\WalletController;
 use Slim\App;
 
@@ -61,6 +62,11 @@ function addRoutes(App $app): void
         MembershipController::class . ':showMembership'
     )->setName('membership');
 
+    $app->get(
+        '/profile/changePassword',
+        PwdController::class . ':showPwdSettings'
+    )->setName('home');
+
 
 
     /* POST */
@@ -83,4 +89,8 @@ function addRoutes(App $app): void
     $app->post(
         '/user/membership',
         MembershipController::class . ':updateMembership');
+
+    $app->post(
+        '/profile/changePassword',
+        PwdController::class . ':updatePassword');
 }

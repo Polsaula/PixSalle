@@ -55,30 +55,30 @@
           <div class="col-xl-9 col-lg-10">
             <div class="main-menu black-menu menu-bg-white d-none d-lg-block">
               {% if email is not empty %}
-              <nav class="d-flex align-items-center">
-                <div class="d-flex justify-content-center flex-grow-1">
-                  <div>
-                    <ul id="navigation">
-                      <li><a href="/explore">Explore</a></li>
-                      <li><a href="/blog">Blog</a></li>
-                      <li><a href="/portfolio">Portfolio</a></li>
-                      <li><a href="/user/wallet">Wallet</a></li>
+                <nav class="d-flex align-items-center">
+                  <div class="d-flex justify-content-center flex-grow-1">
+                    <div>
+                      <ul id="navigation">
+                        <li><a href="/explore">Explore</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/portfolio">Portfolio</a></li>
+                        <li><a href="/user/wallet">Wallet</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="flex-grow-0">
+                    <ul>
+                      <li>
+                        <a href="profile"><img src="uploads/{{ profilePic }}" width="40" style="margin-right: 10px">Hi, {{ email|replace({'@salle.url.edu': ''}) }}!</a>
+                        <ul class="submenu">
+                          <li><a href="/profile">Profile</a></li>
+                          <li><a href="/user/membership">Membership</a></li>
+                          <li><a onclick="signOut()" class="gj-cursor-pointer">Log Out</a></li>
+                        </ul>
+                      </li>
                     </ul>
                   </div>
-                </div>
-                <div class="flex-grow-0">
-                  <ul>
-                    <li>
-                      <a href="profile"><img src="/assets/img/blog/author.png" width="40" style="margin-right: 10px">Hi, {{ email|replace({'@salle.url.edu': ''}) }}!</a>
-                      <ul class="submenu">
-                        <li><a href="/profile">Profile</a></li>
-                        <li><a href="/user/membership">Membership</a></li>
-                        <li><a onclick="signOut()" class="gj-cursor-pointer">Log Out</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
+                </nav>
               {% else %}
                 <nav class="d-flex justify-content-end align-items-center">
                   <div>

@@ -6,10 +6,12 @@ namespace Salle\PixSalle\Controller;
 
 use Salle\PixSalle\Service\ValidatorService;
 use Salle\PixSalle\Repository\UserRepository;
+use Salle\PixSalle\Model\User;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
 
@@ -28,61 +30,113 @@ final class ProfileController {
     }
 
     public function showProfile(Request $request, Response $response): Response {
+
+        $pic = $this->userRepository->getPicByEmail($_SESSION['email']);
+        $user = $this->userRepository->getUserByEmail($_SESSION['email']);
+
         return $this->twig->render(
             $response,
             'profile.twig',
             [
-                'email' => $_SESSION['email'],
-                'id' => $_SESSION['user_id']
+                'mail' => $_SESSION['email'],
+                'username' => $user->username(),
+                'profilePic' => $pic,
+                'phoneNumber' => $user->phoneNumber()
             ]
         );
     }
 
-    public function updateProfileData(Request $request, Response $response): Response
-    {
+    private function updateProfilePicture(&$errors){
         $currentDirectory = getcwd();
         $uploadDirectory = "/uploads/";
 
-        $errors = []; // Store errors here
-
-        $fileExtensionsAllowed = ['jpg','png']; // These will be the only file extensions allowed
+        $fileExtensionsAllowed = ['jpg', 'png']; // These will be the only file extensions allowed
         $fileName = $_FILES['newProfilePic']['tmp_name'];
         $fileSize = $_FILES['newProfilePic']['size'];
         $info = getimagesize($fileName);
-        $fileTmpName  = $_FILES['newProfilePic']['tmp_name'];
+        $fileTmpName = $_FILES['newProfilePic']['tmp_name'];
         $ext = pathinfo($_FILES['newProfilePic']['name'], PATHINFO_EXTENSION);
 
         $uploadPath = $currentDirectory . $uploadDirectory . basename($fileName);
 
-        if (! in_array($ext,$fileExtensionsAllowed)) {
-            $errors['ext'] = "This file extension is not allowed. Please upload a JPG or PNG file";
+        if (!in_array($ext, $fileExtensionsAllowed)) {
+            $errors['image']['ext'] = "This file extension is not allowed. Please upload a JPG or PNG file";
         }
 
         if ($fileSize > 1000000) {
-            $errors['size'] = "File exceeds maximum size (1MB)";
+            $errors['image']['size'] = "File exceeds maximum size (1MB)";
         }
 
-        if ($info[0] != 500 || $info[1] != 500) {
-            $errors['res'] = $info[0] . "x" . $info[1];
+        if ($info[0] > 500 || $info[1] > 500) {
+            $errors['image']['res'] = "Image dimensions must be less or equal to 500x500";
         }
 
         if (empty($errors)) {
-            $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
-
-        } else {
-            foreach ($errors as $error) {
-                echo $error . "These are the errors" . "\n";
-            }
+            move_uploaded_file($fileTmpName, $uploadPath);
+            $this->userRepository->updateUserProfilePicture($_SESSION['email'], basename($fileName));
         }
 
-        $imageDir = "uploads/" . basename($fileName);
-        return $this->twig->render(
-            $response,
-            'profile.twig',
-            [
-                'email' => $_SESSION['email'],
-                'profilePic' => $imageDir,
-                'errors' => $errors
-            ]);
+        return $fileName;
+    }
+
+    private function validatePhoneNumber(string $phoneNumber) {
+        if ((strlen($phoneNumber) != 9) || !is_numeric($phoneNumber) || !str_starts_with($phoneNumber, '6')) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function updateProfileData(Request $request, Response $response): Response
+    {
+        $errors = []; // Store errors here
+
+        if (isset($_POST['submit'])) {
+            //If no image has been added into the input field, retrieve the image previously stored on the DB
+            if ($_FILES['newProfilePic']['size'] != 0){
+                $fileName = $this->updateProfilePicture($errors);
+                $imageDir = basename($fileName);
+            } else {
+                $imageDir = $this->userRepository->getPicByEmail($_SESSION['email']);
+            }
+
+            //If no username has been added into the input field, retrieve the username previously stored on the DB
+            if (isset($_POST['username'])) {
+                $this->userRepository->updateUsername($_SESSION['email'], $_POST['username']);
+                $username =  $_POST['username'];
+            } else {
+                $user = $this->userRepository->getUserByEmail($_SESSION['email']);
+                $username = $user->username();
+            }
+
+            if (isset($_POST['phoneNumber'])) {
+                if ($this->validatePhoneNumber($_POST['phoneNumber'])) {
+                    $this->userRepository->updatePhoneNumber($_SESSION['email'], $_POST['phoneNumber']);
+                    $phoneNumber =  $_POST['phoneNumber'];
+                } else{
+                    $errors['phone']['phoneNumber'] = "The phone number must follow the Spanish numbering plan (6XXXXXXXX)";
+                    $user = $this->userRepository->getUserByEmail($_SESSION['email']);
+                    $phoneNumber = $user->phoneNumber();
+                }
+            } else {
+                $user = $this->userRepository->getUserByEmail($_SESSION['email']);
+                $phoneNumber = $user->phoneNumber();
+            }
+
+            return $this->twig->render(
+                $response,
+                'profile.twig',
+                [
+                    'mail' => $_SESSION['email'],
+                    'username' => $username,
+                    'profilePic' => $imageDir,
+                    'phoneNumber' => $phoneNumber,
+                    'errors' => $errors
+                ]);
+        } else {
+            return $this->twig->render(
+                $response,
+                'profile.twig');
+        }
     }
 }

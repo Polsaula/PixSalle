@@ -13,6 +13,7 @@ use Salle\PixSalle\Controller\SignUpController;
 use Salle\PixSalle\Controller\UserSessionController;
 use Salle\PixSalle\Controller\WalletController;
 use Salle\PixSalle\Repository\MySQLUserRepository;
+use Salle\PixSalle\Controller\PwdController;
 use Salle\PixSalle\Repository\PDOConnectionBuilder;
 use Slim\Views\Twig;
 
@@ -43,7 +44,7 @@ function addDependencies(ContainerInterface $container): void
     $container->set(
         HomeController::class,
         function (ContainerInterface $c) {
-            return new HomeController($c->get('view'));
+            return new HomeController($c->get('view'), $c->get('user_repository'));
         }
     );
 
@@ -100,6 +101,13 @@ function addDependencies(ContainerInterface $container): void
         MembershipController::class,
         function (ContainerInterface $c) {
             return new MembershipController($c->get('view'), $c->get('user_repository'));
+        }
+    );
+
+    $container->set(
+        PwdController::class,
+        function (ContainerInterface $c) {
+            return new PwdController($c->get('view'), $c->get('user_repository'));
         }
     );
 }
