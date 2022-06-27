@@ -21,16 +21,9 @@ final class HomeController {
     }
 
     public function showHome(Request $request, Response $response): Response {
-        if(isset($_SESSION['email'])){
-            $imageDir = $this->userRepository->getPicByEmail($_SESSION['email']);
-        }else{
-            $imageDir = "default.png";
-        }
         return $this->twig->render($response,
             'home.twig',
             [
-                'email' => $_SESSION['email'] ?? '',
-                'profilePic' => $imageDir
             ]
         );
     }

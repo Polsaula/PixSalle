@@ -27,11 +27,11 @@ final class BlogController {
     }
 
     public function showBlog(Request $request, Response $response): Response {
+
         return $this->twig->render(
             $response,
             'blog.twig',
             [
-                'email' => $_SESSION['email']
             ]
         );
     }

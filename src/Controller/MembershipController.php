@@ -29,11 +29,12 @@ final class MembershipController {
     }
 
     public function showMembership(Request $request, Response $response): Response {
+
+
         return $this->twig->render(
             $response,
             'membership.twig',
             [
-                'email' => $_SESSION['email'],
                 'membership' => $this->userRepository->getUserMembership($_SESSION['email'])
             ]
         );
@@ -43,32 +44,30 @@ final class MembershipController {
         $parsedBody = $request->getParsedBody();
         if(!isset($parsedBody['membership'])){
             $response->getBody()->write("Error: Bad request. Please, refresh the page and try again");
-            return $response->withStatus(400); //Return bad request if the attribute membership is not present in the body
+            return $response->withStatus(400);
         }
 
         $desiredMembership = $request->getParsedBody()['membership'];
         if(User::validMembershipValue($desiredMembership) === false){
-            $response->getBody()->write("Error: Bad request. Please, refresh the page and try again");
-            return $response->withStatus(400); //Return bad request if the attribute membership doesn't have a valid value
+            $response->getBody()->write("Error: Not a valid Membership ID. Please, refresh the page and try again");
+            return $response->withStatus(400);
         }
 
         $currentMembership = $this->userRepository->getUserMembership($_SESSION['email']);
 
         if($currentMembership == $desiredMembership){
-            $response->getBody()->write("Errorrr: Bad request. Please, refresh the page and try again");
-            return $response->withStatus(400); //Return bad request if the new membership is the same as the old one
+            $response->getBody()->write("You already have this membership!");
+            return $response->withStatus(400);
         }
 
-        //If everything is OK, update the membership
-        //TODO: When wallet is implemented, the money must be subtracted
         $successfulUpdate = $this->userRepository->updateUserMembership($_SESSION['email'], intval($desiredMembership));
 
         if($successfulUpdate){
-            return $response->withStatus(200); //Return everything OK
+            return $response->withStatus(200);
         }
         else{
             $response->getBody()->write("Internal error. Please, try again later");
-            return $response->withStatus(500); //We haven't been able to update (database error)
+            return $response->withStatus(500);
         }
     }
 

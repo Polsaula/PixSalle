@@ -27,11 +27,12 @@ final class PortfolioController {
     }
 
     public function showPortfolio(Request $request, Response $response): Response {
+
+
         return $this->twig->render(
             $response,
             'portfolio.twig',
             [
-                'email' => $_SESSION['email']
             ]
         );
     }

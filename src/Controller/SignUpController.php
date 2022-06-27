@@ -69,9 +69,8 @@ final class SignUpController
             $errors['email'] = "User already exists!";
         }
         if (count($errors) == 0) {
-            $defaultProfilePic = "default.png";
             $username = "user";
-            $user = new User(NULL, $data['email'], md5($data['password']), $username, (string)NULL, $defaultProfilePic, new DateTime(), new DateTime());
+            $user = new User(NULL, $data['email'], md5($data['password']), $username, (string)NULL, "", new DateTime(), new DateTime());
             $this->userRepository->createUser($user);
             return $response->withHeader('Location', '/sign-in')->withStatus(302);
         }

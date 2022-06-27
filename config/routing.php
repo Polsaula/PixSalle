@@ -12,85 +12,86 @@ use Salle\PixSalle\Controller\SignUpController;
 use Salle\PixSalle\Controller\UserSessionController;
 use Salle\PixSalle\Controller\PwdController;
 use Salle\PixSalle\Controller\WalletController;
+use Salle\PixSalle\Middleware\LoginMiddleware;
+use Salle\PixSalle\Middleware\MainMiddleware;
 use Slim\App;
 
-function addRoutes(App $app): void
-{
-    /* GET */
-    $app->get(
-        '/',
-        HomeController::class . ':showHome'
-    )->setName('home');
 
-    $app->get(
-        '/sign-in',
-        UserSessionController::class . ':showSignInForm'
-    )->setName('signIn');
+/* GET */
+$app->get(
+    '/',
+    HomeController::class . ':showHome'
+)->setName('home');
 
-    $app->get(
-        '/sign-up',
-        SignUpController::class . ':showSignUpForm'
-    )->setName('signUp');
+$app->get(
+    '/sign-in',
+    UserSessionController::class . ':showSignInForm'
+)->setName('signIn')->add(MainMiddleware::class);
 
-    $app->get(
-        '/explore',
-        ExploreController::class . ':showExplore'
-    )->setName('explore');
+$app->get(
+    '/sign-up',
+    SignUpController::class . ':showSignUpForm'
+)->setName('signUp')->add(MainMiddleware::class);
 
-    $app->get(
-        '/portfolio',
-        PortfolioController::class . ':showPortfolio'
-    )->setName('portfolio');
+$app->get(
+    '/explore',
+    ExploreController::class . ':showExplore'
+)->setName('explore')->add(LoginMiddleware::class);
 
-    $app->get(
-        '/blog',
-        BlogController::class . ':showBlog'
-    )->setName('blog');
+$app->get(
+    '/portfolio',
+    PortfolioController::class . ':showPortfolio'
+)->setName('portfolio')->add(LoginMiddleware::class);
 
-    $app->get(
-        '/profile',
-        ProfileController::class . ':showProfile'
-    )->setName('home');
+$app->get(
+    '/blog',
+    BlogController::class . ':showBlog'
+)->setName('blog');
 
-    $app->get(
-        '/user/wallet',
-        WalletController::class . ':showWallet'
-    )->setName('wallet');
+$app->get(
+    '/profile',
+    ProfileController::class . ':showProfile'
+)->setName('home')->add(LoginMiddleware::class);
 
-    $app->get(
-        '/user/membership',
-        MembershipController::class . ':showMembership'
-    )->setName('membership');
+$app->get(
+    '/user/wallet',
+    WalletController::class . ':showWallet'
+)->setName('wallet')->add(LoginMiddleware::class);
 
-    $app->get(
-        '/profile/changePassword',
-        PwdController::class . ':showPwdSettings'
-    )->setName('home');
+$app->get(
+    '/user/membership',
+    MembershipController::class . ':showMembership'
+)->setName('membership')->add(LoginMiddleware::class);
 
+$app->get(
+    '/profile/changePassword',
+    PwdController::class . ':showPwdSettings'
+)->setName('home')->add(LoginMiddleware::class);
 
 
-    /* POST */
-    $app->post(
-        '/sign-in',
-        UserSessionController::class . ':signIn');
 
-    $app->post(
-        '/sign-out',
-        UserSessionController::class . ':signOut');
+/* POST */
+$app->post(
+    '/sign-in',
+    UserSessionController::class . ':signIn');
 
-    $app->post(
-        '/sign-up',
-        SignUpController::class . ':signUp');
+$app->post(
+    '/sign-out',
+    UserSessionController::class . ':signOut');
 
-    $app->post(
-        '/profile',
-        ProfileController::class . ':updateProfileData');
+$app->post(
+    '/sign-up',
+    SignUpController::class . ':signUp');
 
-    $app->post(
-        '/user/membership',
-        MembershipController::class . ':updateMembership');
+$app->post(
+    '/profile',
+    ProfileController::class . ':updateProfileData');
 
-    $app->post(
-        '/profile/changePassword',
-        PwdController::class . ':updatePassword');
-}
+$app->post(
+    '/user/membership',
+    MembershipController::class . ':updateMembership');
+
+$app->post(
+    '/profile/changePassword',
+    PwdController::class . ':updatePassword');
+

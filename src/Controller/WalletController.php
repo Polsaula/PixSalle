@@ -31,7 +31,6 @@ final class WalletController {
             $response,
             'wallet.twig',
             [
-                'email' => $_SESSION['email']
             ]
         );
     }

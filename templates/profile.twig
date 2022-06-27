@@ -14,13 +14,13 @@
                 <div class="profile-tab-nav border-right">
                     <div class="p-4">
                         <div class="img-circle text-center mb-3">
-                            {% if profilePic is not null %}
-                                <img src="/uploads/{{ profilePic }}" alt="Image" class="shadow">
+                            {% if session.picture is defined %}
+                                <img src="/uploads/{{ session.picture }}" alt="Image" class="shadow">
                             {% else %}
-                                <img src="/assets/img/blog/author.png" alt="Image" class="shadow">
+                                <img src="/uploads/default.jpeg" alt="Image" class="shadow">
                             {% endif %}
                         </div>
-                        <h4 class="text-center">{{ username }}</h4>
+                        <h4 class="text-center">{{ session.username }}</h4>
                     </div>
                 </div>
                 <form class="tab-content p-4 p-md-5" action="/profile" method="post" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
                                     <input type="text"
                                            name="username"
                                            class="form-control"
-                                           value="{{ username }}">
+                                           value="{{ session.username }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -41,7 +41,7 @@
                                     <label>Email</label>
                                     <input type="text"
                                            class="form-control"
-                                           value="{{ email }}"
+                                           value="{{ session.email }}"
                                            disabled>
                                 </div>
                             </div>
@@ -53,9 +53,7 @@
                                            class="form-control"
                                            value="{{ phoneNumber }}">
                                 </div>
-                                {% if errors['phone']['phoneNumber'] %}
-                                    <h5 style="color: #ff0000; width: 100%">{{ errors['phone']['phoneNumber'] }}</h5>
-                                {% endif %}
+                                
                             </div>
                             <div class="col-md-6">
                                 <label>Update Profile Picture</label>
@@ -63,15 +61,11 @@
                                     <input type="file" name="newProfilePic">
                                     <br>
                                     <br>
-                                    {% if errors['image']['ext'] %}
-                                        <h5 style="color: #ff0000; width: 100%">{{ errors['image']['ext'] }}</h5>
-                                    {% endif %}
-                                    {% if errors['image']['size'] %}
-                                        <h5 style="color: #ff0000; width: 100%">{{ errors['image']['size'] }}</h5>
-                                    {% endif %}
-                                    {% if errors['image']['res'] %}
-                                        <h5 style="color: #ff0000; width: 100%">{{ errors['image']['res'] }}</h5>
-                                    {% endif %}
+                                    {% for messages in flash.getMessages('error') %}
+                                        {% for message in messages %}
+                                            <h5 style="color: #ff0000; width: 100%">{{ message }}</h5>
+                                        {% endfor %}  
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

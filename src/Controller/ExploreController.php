@@ -27,11 +27,11 @@ final class ExploreController {
     }
 
     public function showExplore(Request $request, Response $response): Response {
+
         return $this->twig->render(
             $response,
             'explore.twig',
             [
-                'email' => $_SESSION['email']
             ]
         );
     }

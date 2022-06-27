@@ -40,6 +40,7 @@ class UserSessionController
         $errors['email'] = $this->validator->validateEmail($data['email']);
         $errors['password'] = $this->validator->validatePassword($data['password']);
 
+
         if ($errors['email'] == '') {
             unset($errors['email']);
         }
@@ -55,7 +56,9 @@ class UserSessionController
                 $errors['password'] = 'Your email and/or password are incorrect.';
             } else {
                 $_SESSION['user_id'] = $user->id();
+                $_SESSION['username'] = $user->username();
                 $_SESSION['email'] = $user->email();
+                $_SESSION['picture'] = $this->userRepository->getPicByEmail($_SESSION['email']);
                 if (strcmp($user->username(), "user") == 0){
                     $defUsername = "user" . $user->id();
                     $this->userRepository->updateUsername($_SESSION['email'], $defUsername);
