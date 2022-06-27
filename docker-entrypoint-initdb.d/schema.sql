@@ -15,8 +15,36 @@ CREATE TABLE users(
     phoneNumber VARCHAR(255) NOT NULL,
     profilePic VARCHAR(255) NOT NULL,
     membership INT DEFAULT 0,
-    DOUBLE NOT NULL DEFAULT 0,
+    wallet FLOAT NOT NULL DEFAULT 0,
     createdAt DATETIME NOT NULL,
     updatedAt DATETIME NOT NULL,
     PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS portfolio;
+CREATE TABLE portfolio(
+    id INT AUTO_INCREMENT,
+    user_id INT,
+    title VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS album;
+CREATE TABLE album(
+    id INT AUTO_INCREMENT,
+    portfolio_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (portfolio_id) REFERENCES portfolio(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE album AUTO_INCREMENT=1501;
+
+DROP TABLE IF EXISTS photo;
+CREATE TABLE photo(
+    id INT AUTO_INCREMENT,
+    album_id INT NOT NULL,
+    link VARCHAR(1000) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (album_id) REFERENCES album(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

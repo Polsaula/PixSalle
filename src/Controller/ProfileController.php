@@ -44,8 +44,8 @@ final class ProfileController {
             $response,
             'profile.twig',
             [
-                'username' => $user->username(),
-                'phoneNumber' => $user->phoneNumber()
+                'phoneNumber' => $user->phoneNumber(),
+                'username' => $_SESSION['username'],
             ]
         );
     }
@@ -117,7 +117,7 @@ final class ProfileController {
 
             if (isset($_POST['username'])) {
                 $this->userRepository->updateUsername($_SESSION['email'], $_POST['username']);
-                $username =  $_POST['username'];
+                $_SESSION['username'] = $_POST['username'];
             } else {
                 $user = $this->userRepository->getUserByEmail($_SESSION['email']);
                 $username = $user->username();
@@ -144,6 +144,7 @@ final class ProfileController {
                 'profile.twig',
                 [
                     'phoneNumber' => $phoneNumber,
+                    'username' => $_SESSION['username'],
                 ]);
         } else {
             return $this->twig->render(

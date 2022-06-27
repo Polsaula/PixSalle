@@ -17,10 +17,10 @@
                             {% if session.picture is defined %}
                                 <img src="/uploads/{{ session.picture }}" alt="Image" class="shadow">
                             {% else %}
-                                <img src="/uploads/default.jpeg" alt="Image" class="shadow">
+                                <img src="/uploads/default.png" alt="Image" class="shadow">
                             {% endif %}
                         </div>
-                        <h4 class="text-center">{{ session.username }}</h4>
+                        <h4 class="text-center">{{ username }}</h4>
                     </div>
                 </div>
                 <form class="tab-content p-4 p-md-5" action="/profile" method="post" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
                                     <input type="text"
                                            name="username"
                                            class="form-control"
-                                           value="{{ session.username }}">
+                                           value="{{ username }}">
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -31,9 +31,6 @@ final class SignUpController
         $this->validator = new ValidatorService();
     }
 
-    /**
-     * Renders the form
-     */
     public function showSignUpForm(Request $request, Response $response): Response
     {
         $routeParser = RouteContext::fromRequest($request)->getRouteParser();
@@ -70,7 +67,7 @@ final class SignUpController
         }
         if (count($errors) == 0) {
             $username = "user";
-            $user = new User(NULL, $data['email'], md5($data['password']), $username, (string)NULL, "", "30", new DateTime(), new DateTime());
+            $user = new User(NULL, $data['email'], md5($data['password']), $username, (string)NULL, "30", "", new DateTime(), new DateTime());
             $this->userRepository->createUser($user);
             return $response->withHeader('Location', '/sign-in')->withStatus(302);
         }

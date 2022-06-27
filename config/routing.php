@@ -99,3 +99,12 @@ $app->post(
     '/user/wallet',
     WalletController::class . ':updateWallet');
 
+$app->post(
+    '/portfolio',
+    PortfolioController::class . ':createPortfolio');
+
+$app->post(
+    '/portfolio/album',
+    PortfolioController::class . ':createAlbum');
+    
+

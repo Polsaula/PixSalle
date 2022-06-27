@@ -13,9 +13,12 @@ use Salle\PixSalle\Controller\ProfileController;
 use Salle\PixSalle\Controller\SignUpController;
 use Salle\PixSalle\Controller\UserSessionController;
 use Salle\PixSalle\Controller\WalletController;
+use Salle\PixSalle\Repository\ImageRepository;
+use Salle\PixSalle\Repository\MySQLImageRepository;
 use Salle\PixSalle\Repository\MySQLUserRepository;
 use Salle\PixSalle\Controller\PwdController;
 use Salle\PixSalle\Repository\PDOConnectionBuilder;
+use Salle\PixSalle\Repository\UserRepository;
 use Slim\Flash\Messages;
 use Slim\Views\Twig;
 
@@ -56,6 +59,10 @@ $container->set(UserRepository::class, function (ContainerInterface $container) 
     return new MySQLUserRepository($container->get('db'));
 });
 
+$container->set(ImageRepository::class, function (ContainerInterface $container) {
+    return new MySQLImageRepository($container->get('db'));
+});
+
 $container->set(
     HomeController::class,
     function (ContainerInterface $c) {
@@ -94,14 +101,14 @@ $container->set(
 $container->set(
     ExploreController::class,
     function (ContainerInterface $c) {
-        return new ExploreController($c->get('view'), $c->get(UserRepository::class));
+        return new ExploreController($c->get('view'), $c->get(UserRepository::class), $c->get(ImageRepository::class));
     }
 );
 
 $container->set(
     PortfolioController::class,
     function (ContainerInterface $c) {
-        return new PortfolioController($c->get('view'), $c->get(UserRepository::class));
+        return new PortfolioController($c->get('view'), $c->get(UserRepository::class), $c->get(ImageRepository::class), $c->get('flash'));
     }
 );
 

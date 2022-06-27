@@ -59,7 +59,10 @@ class UserSessionController
                 $_SESSION['username'] = $user->username();
                 $_SESSION['email'] = $user->email();
                 $_SESSION['wallet'] = strval($user->wallet());
-                $_SESSION['picture'] = $this->userRepository->getPicByEmail($_SESSION['email']);
+                $imatge = $this->userRepository->getPicByEmail($_SESSION['email']);
+                if(strlen($imatge) > 0){
+                    $_SESSION['picture'] = $this->userRepository->getPicByEmail($_SESSION['email']);
+                }
                 if (strcmp($user->username(), "user") == 0){
                     $defUsername = "user" . $user->id();
                     $this->userRepository->updateUsername($_SESSION['email'], $defUsername);
@@ -82,6 +85,10 @@ class UserSessionController
     {
         session_destroy();
         $routeParser = RouteContext::fromRequest($request)->getRouteParser();
-        return $response->withStatus(200); //Signed out correctly
+        unset($_SESSION['user_id']);
+        unset($_SESSION['username']);
+        unset($_SESSION['email']);
+        unset($_SESSION['wallet']);
+        return $response->withStatus(200);
     }
 }

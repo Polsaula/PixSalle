@@ -22,11 +22,13 @@ final class MySQLUserRepository implements UserRepository
 
     public function createUser(User $user): void{
         $query = <<<'QUERY'
-        INSERT INTO users(email, password, username, phoneNumber, profilePic,createdAt, updatedAt)
-        VALUES(:email, :password, :username, :phoneNumber, :profilePic,:createdAt, :updatedAt)
+        INSERT INTO users(email, password, username, phoneNumber, wallet, profilePic,createdAt, updatedAt)
+        VALUES(:email, :password, :username, :phoneNumber, :wallet, :profilePic, :createdAt, :updatedAt)
         QUERY;
 
         $statement = $this->databaseConnection->prepare($query);
+        $stringVar = "30.0";
+
 
         $email = $user->email();
         $password = $user->password();
@@ -42,7 +44,7 @@ final class MySQLUserRepository implements UserRepository
         $statement->bindParam('phoneNumber', $phoneNumber, PDO::PARAM_STR);
         $statement->bindParam('profilePic', $profilePic, PDO::PARAM_STR);
         $statement->bindParam('createdAt', $createdAt, PDO::PARAM_STR);
-        $statement->bindParam('wallet', "30.0", PDO::PARAM_STR);
+        $statement->bindParam('wallet', $stringVar, PDO::PARAM_STR);
         $statement->bindParam('updatedAt', $updatedAt, PDO::PARAM_STR);
 
         $statement->execute();

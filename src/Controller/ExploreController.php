@@ -16,17 +16,21 @@ final class ExploreController {
     private Twig $twig;
     private ValidatorService $validator;
     private UserRepository $userRepository;
+    private ImageRepository $imageRepository;
 
     public function __construct(
         Twig $twig,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        ImageRepository $imageRepository
     ) {
         $this->twig = $twig;
         $this->userRepository = $userRepository;
+        $this->imageRepository = $imageRepository;
         $this->validator = new ValidatorService();
     }
 
     public function showExplore(Request $request, Response $response): Response {
+        $membership = $this->userRepository->getUserMembership($_SESSION['email']);
 
         return $this->twig->render(
             $response,
