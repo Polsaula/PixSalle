@@ -6,18 +6,21 @@ body {
     box-sizing: border-box;
 }
 
-.cards { 
-    padding: 40px;
+.album{
     display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    overflow-y: auto;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
 }
 
-.cards a{
-    flex: 1;
-    min-width: 33.33%;
+.cards { 
+    padding: 40px;
+    gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(auto-fill);
+    grid-row-gap: .5em;
+    grid-column-gap: 1em;
+    margin-top: 20px;
 }
 
 .cards a .card {

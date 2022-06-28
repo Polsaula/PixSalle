@@ -7,9 +7,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Explore</h1>
-
-    <div class="cards">
+    <br/>
+    <br/>
+    <div class="album">
+        <h1>Explore</h1>
+        <div class="cards">
         {% if images|length > 0 %}
             {% for image in images %}
                 <a href="/portfolio/album/{{ image.albumId }}">
@@ -32,4 +34,6 @@
             <h2>No images have been uploaded yet!</h2>
         {% endif %}
     </div>
+    </div>
+        
 {% endblock %}

@@ -264,6 +264,34 @@
 .btnAlbum span:hover:after {
     width: 100%;
 }
+
+
+.barcodes{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 5%;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.barcodes a{
+    color: black;
+    font-weight: bold;
+}
+
+.fake-qr{
+    height: 100px;
+    width: 100px;
+    color: gray;
+    border: 2px solid black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
   
 
 

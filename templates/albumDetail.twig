@@ -33,6 +33,14 @@
 
     <div class="album-page">
         <div class="album-details">
+            <div class="barcodes">
+                <h2>QR Code</h2>
+                {% if hasBarcode %}
+                    <img src="/assets/img/barcodes/{{ album.id }}.png" alt="{{ album.id }}"/>
+                {% else %}
+                    <div class="fake-qr">None</div>
+                {% endif %}
+            </div>
             <br/>
             <br/>
             <h1>Album {{ album.title }}</h1>
@@ -40,9 +48,17 @@
                 {% if album.author.email == session.email %}
                     <button class="actionAlbumBtn btnAlbum" type="button" data-toggle="modal" data-target="#modalAlbum"><span>Add new Image</span></button>
                 {% endif %}
-                <form method="POST" action="/barcode/{{ album.id }}">
-                    <button class="actionAlbumBtn btnAlbum"><span>Generate QR</span></button>
-                </form>
+
+                {% if hasBarcode %}
+                    <a href="/assets/img/barcodes/{{ album.id }}.png" download> 
+                        <button class="actionAlbumBtn btnAlbum"><span>Download QR</span></button>
+                    </a>
+                {% else %}
+                    <form method="POST" action="/barcode/{{ album.id }}">
+                        <button class="actionAlbumBtn btnAlbum"><span>Generate QR</span></button>
+                    </form>
+                {% endif %}
+                
                 {% if album.author.email == session.email %}
                     <button class="actionAlbumBtn btnAlbum" onClick="deleteAlbum({{ album.id }})"><span>Delete</span></button>
                 {% endif %}

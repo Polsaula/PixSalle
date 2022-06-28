@@ -37,13 +37,16 @@ final class AlbumController {
         $images =  $this->imageRepository->getAlbumImages(intval($albumId));
         $album =  $this->imageRepository->getAlbumById(intval($albumId));
 
+        $hasBarcode=file_exists("assets/img/barcodes/$albumId.png");
+
         return $this->twig->render(
             $response,
             'albumDetail.twig',
             [
                 'user' => $user,
                 'images' => $images,
-                'album' => $album
+                'album' => $album,
+                'hasBarcode' => $hasBarcode
             ]
         );
     }
@@ -51,11 +54,17 @@ final class AlbumController {
 
     public function generateQRCode(Request $request, Response $response): Response{
 
-        echo "arribo aqui";
+        $albumId = $request->getAttribute('albumId');
+
+        $album =  $this->imageRepository->getAlbumById(intval($albumId));
 
         $data = array(
-        'symbology' => 'QRCode',
-        'code' => '12345'
+            'symbology' => 'QRCode',
+            'code' => 'http://localhost:8030/portfolio/album/'.$albumId,
+            'dpi' => 300,
+            'height' => 300,
+            'width' => 300,
+            'humanReadable' => $album->title()
         );
 
         $options = array(
@@ -68,17 +77,12 @@ final class AlbumController {
         );
 
         $context  = stream_context_create( $options );
-        $url = 'http://192.168.16.2/BarcodeGenerator';
-        $response = file_get_contents( $url, false, $context );
+        $url = "https://barcodeprowebapi.azurewebsites.net/BarcodeGenerator";
+        $resposta = file_get_contents( $url, false, $context );
 
-        $currentDirectory = getcwd();
-        $uploadDirectory = "/uploads/";
+        file_put_contents("assets/img/barcodes/$albumId.png", $resposta);
 
-        $imageName = $currentDirectory . $uploadDirectory . 'prova.png';
-
-        file_put_contents($imageName, $response);
-
-        return $response->withHeader('Location', '/portfolio')->withStatus(302);        
+        return $response->withHeader('Location', '/portfolio/album/'.$albumId)->withStatus(302);
     }
 
     public function addImage(Request $request, Response $response): Response {
