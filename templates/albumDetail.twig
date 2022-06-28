@@ -13,18 +13,29 @@
         function deleteAlbum(albumID){    
             fetch('http://localhost:8030/portfolio/album/' + albumID, {
                 method: 'DELETE'
-            }).then(()=>{
-                console.log('deleted');
+            }).then((data)=>{
+               window.location.href = "/portfolio";
             });
         }
         
-        function deleteImage(albumID, imageId){
+        function deleteImage(albumID, idImatge){
+            
+            var data = {
+                imageId: idImatge
+            };
 
             fetch('http://localhost:8030/portfolio/album/' + albumID, {
                 method: 'DELETE',
-                body: "{'imageId': " + imageId + "}"
-            }).then(()=>{});
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then((response) => {
+                window.location.href = "/portfolio/album/"+albumID;
+            });
         }
+            
 
     </script>
 {% endblock %}

@@ -95,20 +95,45 @@ final class AlbumController {
         return $response->withHeader('Location', '/portfolio/album/'.$albumId)->withStatus(302);
     }
 
-
     public function deleteImage(Request $request, Response $response): Response {
         
         $albumId = $request->getAttribute('id');
         $data = $request->getParsedBody();
 
-        echo "He entrat aqui";
+        $dades =$data['imageId'] ?? 'empty';
+        
+        if( $dades != "empty" ){
+            $status = $this->imageRepository->deleteImage( intval($data['imageId']));
+            $responseBody ="";
+            if($status == true){
+                $responseBody = <<<body
+                {"message": "OK Image"}
+                body;
+            }else{
+                $responseBody = <<<body
+                {"message": "KO Image $dades"}
+                body;
+            }
+            $response->getBody()->write($responseBody);
 
-        if($data['imageId'] != null || !isset($data['imageId'])){
-            $this->imageRepository->deleteImage(intval($albumId), intval($data['imageId']));
-            return $response->withHeader('Location', '/portfolio')->withStatus(302);   
+            return $response->withHeader('content-type', 'application/json')->withStatus(200);
+            
         }else{
-            $this->imageRepository->deleteAlbum($albumId);
-            return $response->withHeader('Location', '/portfolio')->withStatus(302);
+            $status = $this->imageRepository->deleteAlbum(intval($albumId));
+            $responseBody ="";
+            if($status == true){
+                $responseBody = <<<body
+                {"message": "OK Album"}
+                body;
+                
+            }else{
+                $responseBody = <<<body
+                {"message": "KO Album $dades"}
+                body;
+            }
+            $response->getBody()->write($responseBody);
+
+                return $response->withHeader('content-type', 'application/json')->withStatus(200);
         }
 
     }

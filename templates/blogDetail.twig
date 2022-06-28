@@ -4,24 +4,92 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/assets/css/blogDetail.css">
+
+
+    <script>
+    
+        function deleteBlog(blogId){    
+            fetch('http://localhost:8030/api/blog/' + blogId, {
+                method: 'DELETE'
+            }).then(()=>{
+                window.location.href = "/blog";
+            });
+        }
+
+
+        function updateBlog(blogId){    
+
+            var contingut = document.getElementById("new-content").value;
+
+            var data = {
+                title: '{{ entry.title }}',
+                content: contingut
+            };
+
+            fetch('http://localhost:8030/api/blog/' + blogId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }).then(()=>{
+                window.location.href = "/blog/"+blogId;
+            });
+        }
+
+    </script>
 {% endblock %}
 
 {% block content %}
 
-<div class="postDetail">
+<div class="postDetail" id="postId">
     <h1>{{ entry.title }}</h1>
     </br>
     <div class="postInfo">
         <p>{{ entry.user.username }}</p>
         <div class="box"></div>
-         <p>|</p>
+        <p>|</p>
         <div class="box"></div>
         <p>{{ entry.date|date("m/d/Y") }}</p>
     </div>
     <div class="content">
         <p>{{ entry.content }}</p>
     </div>
-    <a href="/blog">Go back</a>
+    </br>
+    <div class="buttons">
+        <a href="/blog"><button type="button">Go Back</button></a>
+        <div class="biggerBox"></div>
+        <button type="button" onclick="myFunction()">Edit</button>
+        <div class="biggerBox"></div>
+        <button type="button" onClick="deleteBlog({{ entry.id }})">Delete</button>
+    </div>
 </div>
+
+<div class="postEdit" id="textId">
+    <h1>{{ entry.title }}</h1>
+    </br>
+    <form>
+        <textarea rows="10" cols="130" class="textarea" type="textarea" id="new-content">{{ entry.content }}</textarea>
+        </br>
+        </br>
+        <button type="button" onclick="updateBlog({{ entry.id }})">Save</button>
+    </form>
+</div>
+
+<script>
+    const post = document.getElementById("postId");
+    const textArea = document.getElementById("textId");
+
+    function myFunction() {
+        if (post.style.display == "block"){
+            post.style.display = "none";
+            textArea.style.display = "flex";
+        } else {
+            post.style.display = "block";
+            textArea.style.display = "none";
+        }
+    }
+</script>
+
 
 {% endblock %}

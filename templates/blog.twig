@@ -4,6 +4,30 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/assets/css/blog-style.css">
+
+    <script>
+
+        function createPost(){
+            var title = document.getElementById("title").value;
+            var content = document.getElementById("text-area-resize").value;
+            var data = {
+                title: title,
+                content: content,
+                userId: parseInt({{ userId }})
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8030/api/blog", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 201) {
+                    window.location.href = "/blog/"+ xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify(data));
+        }
+
+    </script>
+
 {% endblock %}
 
 {% block content %}
@@ -37,10 +61,32 @@
             </div>
         {% endfor %}
     </div>
-    <div class="info"></div>
+    <div class="info">
+        <form class="form">
+            <h2>Create Post</h2>
+            <p type="Title"><input  id="title" placeholder="Write your title here.."></input></p>
+            <p type="Content"><textarea id="text-area-resize" class="textarea resize-ta" placeholder="What would you like to tell us.."></textarea></p>
+            <button onClick="createPost()" >Post Entry</button>
+        </form>
+    </div>
     </div>
 </div>
 
+
+<script>
+
+    function calcHeight(value) {
+        let numberOfLineBreaks = (value.match(/\n/g) || []).length;
+        let newHeight = 90 + numberOfLineBreaks * 20 + 12 + 2;
+        return newHeight;
+    }
+
+    var textarea = document.querySelector('textarea');
+    textarea.addEventListener("keyup", () => {
+        textarea.style.height = calcHeight(textarea.value) + "px";
+    });
+
+</script>
 
 
 

@@ -134,3 +134,27 @@ $app->delete(
     AlbumController::class . ":deleteImage"
 );
 
+
+/* API */
+
+$app->get(
+    '/api/blog',
+    BlogController::class . ':getBlog'
+);
+$app->get(
+    '/api/blog/{id}',
+    BlogController::class . ':getBlogId'
+);
+$app->post(
+    '/api/blog',
+    BlogController::class . ':postBlog'
+);
+$app->put(
+    '/api/blog/{id}',
+    BlogController::class . ':putBlog'
+);
+$app->delete(
+    '/api/blog/{id}',
+    BlogController::class . ':deleteBlogId'
+);
+

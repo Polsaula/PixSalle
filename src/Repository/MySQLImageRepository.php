@@ -162,7 +162,7 @@ final class MySQLImageRepository implements ImageRepository
 
             return new Album(intval($row['id']), intval($row['portfolio_id']), $row['title'], $cover, $user);
         }else{
-            return new Album(-1, -1, '', '');
+            return null;
         }
     }
 
@@ -179,13 +179,15 @@ final class MySQLImageRepository implements ImageRepository
         $u = [];
 
         $album = $this->getAlbumById(intval($id));
-        $portfolio = $this->getPortfolioById($album->portfolioId());
-        $user = $this->getUserById($portfolio->userId());
-
-        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            array_push($u,  new Image(intval($row['id']), intval($row['album_id']), $row['link'], $user));
+        if($album != null){
+            $portfolio = $this->getPortfolioById($album->portfolioId());
+            $user = $this->getUserById($portfolio->userId());
+    
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                array_push($u,  new Image(intval($row['id']), intval($row['album_id']), $row['link'], $user));
+            }
+            return $u;
         }
-        return $u;
     }
     
     public function createImage(int $albumId, string $link){
@@ -203,31 +205,69 @@ final class MySQLImageRepository implements ImageRepository
     }
 
 
-    public function deleteImage(int $imageId){
+    public function getImageById(int $imageId){
         $query = <<<'QUERY'
-        DELETE FROM photo WHERE id = :id
+        SELECT * FROM photo WHERE id = :id
         QUERY;
 
         $statement = $this->databaseConnection->prepare($query);
         $statement->bindParam('id', $imageId, PDO::PARAM_STR);
         $statement->execute();
-    }
-
-    public function deleteAlbum(int $albumID){
-
-        $images = $this->getAlbumImages($albumID);
         
-        foreach($images as $item) {
-            $this->deleteImage($item->id());
+
+        if($statement->rowCount() == 1){
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $album = $this->getAlbumById(intval($row['album_id']));
+            $portfolio = $this->getPortfolioById($album->portfolioId());
+            $user = $this->getUserById($portfolio->userId());
+            return new Image(intval($row['id']), intval($row['album_id']), $row['link'], $user);
+        }else{
+            return null;
+        }
+    }
+    
+
+    public function deleteImage(int $imageId): bool{
+        $image = $this->getImageById($imageId);
+        if($image != null){
+                $query = <<<'QUERY'
+                DELETE FROM photo WHERE id = :id
+                QUERY;
+        
+                $statement = $this->databaseConnection->prepare($query);
+                $statement->bindParam('id', $imageId, PDO::PARAM_STR);
+                return $statement->execute();
+        }else{
+            return false;
         }
 
-        $query = <<<'QUERY'
-        DELETE FROM album WHERE id = :id
-        QUERY;
+    }
 
-        $statement = $this->databaseConnection->prepare($query);
-        $statement->bindParam('id', $albumID, PDO::PARAM_STR);
-        $statement->execute();
+    public function deleteAlbum(int $albumID): bool{
+
+        $album = $this->getAlbumById(intval($albumID));
+        if($album != null){
+            $images = $this->getAlbumImages($albumID);
+    
+            if($images != null){
+                foreach($images as $item) {
+                    $this->deleteImage($item->id());
+                }
+            }
+    
+            $query = <<<'QUERY'
+            DELETE FROM album WHERE id = :id
+            QUERY;
+    
+            $statement = $this->databaseConnection->prepare($query);
+            $statement->bindParam('id', $albumID, PDO::PARAM_STR);
+            $statement->execute();
+            return true;
+        }else{
+            return false;
+        }
+
+        
     }
 
 

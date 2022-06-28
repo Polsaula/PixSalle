@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace Salle\PixSalle\Model;
 
 use DateTime;
+use JetBrains\PhpStorm\Internal\TentativeType;
+use JsonSerializable;
 
-class Blog{
+class Blog implements JsonSerializable{
 
     private int $id;
-    private User $user;
+    private ?User $user;
     private string $title;
     private string $content;
     private Datetime $date;
@@ -48,4 +50,12 @@ class Blog{
         return $this->date;
     }
 
+    public function jsonSerialize(){
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'content' => $this->content,
+            'userId' => $this->user->id()
+        ];
+    }
 }

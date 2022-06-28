@@ -56,9 +56,9 @@ body {
     display: block;
     background-color: #07111250;
     height: 200px;
+    color: white !important;
     width: 100%;
     border-radius: 20px;
-    color: white;
 }
 
 .cards h2{
@@ -67,6 +67,5 @@ body {
 }
 
 .cards h5{
-    color: white;
     font-weight: bold;
 }
