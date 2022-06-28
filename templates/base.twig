@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en" style="min-height: 100vh">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="/assets/css/themify-icons.css">
   <link rel="stylesheet" href="/assets/css/slick.css">
   <link rel="stylesheet" href="/assets/css/nice-select.css">
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  {% block styles %}{% endblock %}
 
   {% block head %}{% endblock %}
-  {% block styles %}{% endblock %}
 </head>
-<body class="d-flex flex-column" style="min-height: 100vh">
+<body>
 <div id="preloader-active">
   <div class="preloader d-flex align-items-center justify-content-center">
     <div class="preloader-inner position-relative">
@@ -98,40 +98,25 @@
       </div>
     </div>
   </div>
+  <div class="headerSeparator">
+  </div>
 </header>
-<main class="wrapper flex-grow-1">
+<main>
   {% block content %}{% endblock %}
 </main>
-<footer>
-  <div class="footer-wrappper">
-    <div class="footer-area" style="padding-top: 30px">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="single-footer-caption mb-50 text-center">
-              <div class="footer-logo mb-25">
-                <a href="/"><img src="/assets/img/logo/logo2_footer.png" alt=""></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="footer-separator"></div>
+<footer  class="footer-pixisalle">
+
+    <div class="footer-logo mb-25">
+      <a href="/"><img src="/assets/img/logo/logo2_footer.png" alt=""></a>
     </div>
-    <div class="footer-bottom-area">
-      <div class="container">
-        <div class="footer-border" style="padding-top: 0;">
-          <div class="row d-flex align-items-center">
-            <div class="col-xl-12 ">
-              <div class="footer-copy-right text-center">
-                <p style="margin-bottom: 0">Copyright &copy;<script>document.write(new Date().getFullYear());</script> PixSalle | All rights reserved</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+    <div class="footer-copy-right text-center">
+      <p style="margin-bottom: 0; color: white">Copyright &copy;<script>document.write(new Date().getFullYear());</script> PixSalle | All rights reserved</p>
     </div>
-  </div>
-  {% block footer %}{% endblock %}
+
+  {% block footer %}
+  {% endblock %}
 </footer>
 
 <div id="back-top" >

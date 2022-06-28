@@ -1,0 +1,98 @@
+{% extends "base.twig" %}
+
+{% block title %}{{ album.title }}{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="/assets/css/albumDetail.css">
+{% endblock %}
+    
+    
+
+{% block head %}
+    <script>
+        function deleteAlbum(albumID){    
+            fetch('http://localhost:8030/portfolio/album/' + albumID, {
+                method: 'DELETE'
+            }).then(()=>{
+                console.log('deleted');
+            });
+        }
+        
+        function deleteImage(albumID, imageId){
+
+            fetch('http://localhost:8030/portfolio/album/' + albumID, {
+                method: 'DELETE',
+                body: "{'imageId': " + imageId + "}"
+            }).then(()=>{});
+        }
+
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="album-page">
+        <div class="album-details">
+            <br/>
+            <br/>
+            <h1>Album {{ album.title }}</h1>
+            <div class="actionButtonsAlbum">
+                {% if album.author.email == session.email %}
+                    <button class="actionAlbumBtn btnAlbum" type="button" data-toggle="modal" data-target="#modalAlbum"><span>Add new Image</span></button>
+                {% endif %}
+                <form method="POST" action="/barcode/{{ album.id }}">
+                    <button class="actionAlbumBtn btnAlbum"><span>Generate QR</span></button>
+                </form>
+                {% if album.author.email == session.email %}
+                    <button class="actionAlbumBtn btnAlbum" onClick="deleteAlbum({{ album.id }})"><span>Delete</span></button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAlbum" tabindex="-1" role="dialog" aria-labelledby="modalAlbumLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <form role="form" action="/portfolio/album/{{album.id}}" method="POST">
+                    <div class="modal-header">
+                        <h2 id="modalAlbumLabel">Add new Image</h2>
+                    </div>
+                    <div class="modal-body">
+                            <div>
+                                <p>Introduce the URL of the image you want to add</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="imageURL">Public Image URL</label>
+                                <input type="text" class="form-control" id="imageURL" name="imageURL">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="actionAlbumBtn btnAlbum" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="actionAlbumBtn btnAlbum" >Add</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+
+        {% if images|length > 0 %}
+            <div class="container">
+                {% for foto in images %}
+                    <div class="cards">
+                        <div class="card-item">
+                            <img class="card-image" src={{ foto.link }} alt={{ foto.link }}/>
+                            <div class="card-info">
+                                <h2 class="card-title"><strong>Author:</strong> {{ foto.author.username }}</h2>                    </div>
+                            </div>
+                       {% if album.author.email == session.email %}
+                            <div class="overlay"></div>
+                            <button class="fill" onClick="deleteImage({{ album.id }}, {{ foto.id }})">Delete</button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2>This album is empty!</h2>
+        {% endif %}    
+    </div>
+{% endblock %}

@@ -10,16 +10,19 @@ class Image{
     private int $id;
     private int $albumId;
     private string $link;
+    private User $author;
 
 
     public function __construct(
         ?int $id,
-        string $albumId,
-        string $link
+        int $albumId,
+        string $link,
+        User $author
     ){
         $this->id = $id;
         $this->albumId = $albumId;
         $this->link = $link;
+        $this->author = $author;;
     }
 
 
@@ -33,6 +36,10 @@ class Image{
 
     public function link(): string{
         return $this->link;
+    }
+
+    public function author(): User{
+        return $this->author;
     }
 
 }

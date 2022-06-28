@@ -27,6 +27,10 @@ class Portfolio{
         return $this->id;
     }
 
+    public function userId(): int{
+        return $this->userId;
+    }
+
     public function title(): string{
         return $this->title;
     }

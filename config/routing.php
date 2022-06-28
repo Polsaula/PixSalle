@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Salle\PixSalle\Controller\AlbumController;
 use Salle\PixSalle\Controller\BlogController;
 use Salle\PixSalle\Controller\ExploreController;
 use Salle\PixSalle\Controller\HomeController;
@@ -68,6 +69,11 @@ $app->get(
     PwdController::class . ':showPwdSettings'
 )->setName('home')->add(LoginMiddleware::class);
 
+$app->get(
+    '/portfolio/album/{id}',
+    AlbumController::class . ':showAlbum'
+)->setName('home')->add(LoginMiddleware::class);
+
 
 
 /* POST */
@@ -106,5 +112,20 @@ $app->post(
 $app->post(
     '/portfolio/album',
     PortfolioController::class . ':createAlbum');
-    
+
+$app->post(
+    '/portfolio/album/{id}',
+    AlbumController::class . ':addImage'
+);
+
+$app->post(
+    '/barcode/{albumId}',
+    AlbumController::class . ':generateQRCode'
+);
+
+/* DELETE */
+$app->delete(
+    '/portfolio/album/{id}',
+    AlbumController::class . ":deleteImage"
+);
 

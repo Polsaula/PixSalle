@@ -22,11 +22,15 @@
 	8. video-area
 	9. counter
 	10. footer
+    
 
 -------------------------------------------------
 */
 /*--------------- ---- Responsive --------------------------*/
 /*-------------   Color Variable  --------------*/
+
+
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");
 /* line 31, C:/Users/HP/Desktop/Augst-HTML/297.Photography/Agriculture_Template/assets/scss/_color.scss */
 .white-bg {
@@ -8335,6 +8339,47 @@ del {
 /* line 1067, C:/Users/HP/Desktop/Augst-HTML/297.Photography/Agriculture_Template/assets/scss/_elements.scss */
 .switch-wrap {
   margin-bottom: 10px;
+}
+
+
+
+.footer-separator{
+  height: 170px;
+}
+
+.footer-pixisalle{
+  background-color: #071112;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px
+}
+
+.header-area{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+  background-color:white;
+}
+
+.headerSeparator{
+  height: 80px;
+}
+
+footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+html, body {
+    overflow: auto;
 }
 
 /*# sourceMappingURL=style.css.map */

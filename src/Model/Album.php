@@ -11,18 +11,21 @@ class Album{
     private int $portfolioId;
     private string $title;
     private string $cover;
+    private User $author;
 
 
     public function __construct(
         ?int $id,
         int $portfolioId,
         string $title,
-        string $cover
+        string $cover,
+        User $author
     ){
         $this->id = $id;
-        $this->userId = $portfolioId;
+        $this->portfolioId = $portfolioId;
         $this->title = $title;
         $this->cover = $cover;
+        $this->author = $author;
     }
 
 
@@ -40,6 +43,10 @@ class Album{
 
     public function cover(): string{
         return $this->cover;
+    }
+
+    public function author(): User{
+        return $this->author;
     }
 
 }

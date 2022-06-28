@@ -11,4 +11,6 @@ interface ImageRepository {
     public function getUserPortfolio(int $id);
     public function getFirstAlbumImage(int $albumID);
     public function createAlbum(int $id, string $title): void;
+    public function getPortfolioById(int $portfolioId);
+    public function getAlbumById(int $albumID);
 }

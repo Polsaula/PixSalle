@@ -3,8 +3,33 @@
 {% block title %}Portfolio{% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" type="text/css" href="/assets/css/explore.css">
 {% endblock %}
 
 {% block content %}
     <h1>Explore</h1>
+
+    <div class="cards">
+        {% if images|length > 0 %}
+            {% for image in images %}
+                <a href="/portfolio/album/{{ image.albumId }}">
+                    <div class="card">
+                        <div class="card__image-wrapper">
+                            {% if image.link|length > 0 %}
+                                <img class="card__image" src={{ image.link }} height="200">
+                            {% else %}
+                                <img class="card__image" src="/assets/img/portfolio/albumDefault.png" height="200">
+                            {% endif %}
+                        </div>
+                        <div class="card__content">
+                            <h5 class="card__category">AUTHOR</h5>
+                            <h2 class="card__title">{{ image.author.username }}</h2>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <h2>No images have been uploaded yet!</h2>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -2,9 +2,7 @@
 body {
     font-family: "Roboto", sans-serif;
 }
-* {
-    box-sizing: border-box;
-}
+
 
 .changeMembership{
     width: 100%;
@@ -21,7 +19,6 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 600px;
 }
 
 button {
@@ -50,31 +47,6 @@ button:hover {
     display: grid;
 }
 
-.albumList{
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 600px;
-    width: 100%;
-    justify-content: space-around;
-}
-
-.album{
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-left: 50px;
-    padding-right: 50px;
-    width: 220px !important;
-    height: 500px;
-    align-items: center;
-    border:2px solid rgb(0,0,0,.5);
-    border-radius: 5px;
-}
-
 .album img{
     padding-top: 20px;
     height: auto;
@@ -83,14 +55,21 @@ button:hover {
 
 .cards { 
     padding: 40px;
-    display: flex;
     gap: 30px;
-    flex-wrap: wrap;
-    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(auto-fill);
+    grid-row-gap: .5em;
+    grid-column-gap: 1em;
     margin-top: 20px;
 }
 
-.cards .card {
+.cards a{
+    flex: 1;
+    min-width: 33.33%;
+}
+
+.cards a .card {
     color: #fff;
     cursor: pointer;
     position: relative;
@@ -98,28 +77,28 @@ button:hover {
     flex: 1;
     min-width: 33.33%;
 }
-.cards .card__image {
+.cards a .card__image {
     width: 100%;
     border-radius: 20px;
     object-fit: cover;
 }
-.cards .card__category {
+.cards a .card__category {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-.cards .card__title {
+.cards a .card__title {
     letter-spacing: 1px;
 }
-.cards .card__content{
+.cards a .card__content{
     left: 0;
     position: absolute;
     top: 0;
     padding: 20px;
 }
-.cards .card__content{
+.cards a .card__content{
     display: none;
 }
-.cards .card:hover .card__content {
+.cards a .card:hover .card__content {
     display: block;
     background-color: #07111250;
     height: 200px;

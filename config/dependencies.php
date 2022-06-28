@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use DI\Container;
 use Psr\Container\ContainerInterface;
+use Salle\PixSalle\Controller\AlbumController;
 use Salle\PixSalle\Controller\BlogController;
 use Salle\PixSalle\Controller\ExploreController;
 use Salle\PixSalle\Controller\HomeController;
@@ -109,6 +110,13 @@ $container->set(
     PortfolioController::class,
     function (ContainerInterface $c) {
         return new PortfolioController($c->get('view'), $c->get(UserRepository::class), $c->get(ImageRepository::class), $c->get('flash'));
+    }
+);
+
+$container->set(
+    AlbumController::class,
+    function (ContainerInterface $c) {
+        return new AlbumController($c->get('view'), $c->get(UserRepository::class), $c->get(ImageRepository::class));
     }
 );
 

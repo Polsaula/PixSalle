@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Salle\PixSalle\Controller;
 
+use Salle\PixSalle\Repository\ImageRepository;
 use Salle\PixSalle\Service\ValidatorService;
 use Salle\PixSalle\Repository\UserRepository;
 
@@ -30,12 +31,15 @@ final class ExploreController {
     }
 
     public function showExplore(Request $request, Response $response): Response {
-        $membership = $this->userRepository->getUserMembership($_SESSION['email']);
+
+
+        $images = $this->imageRepository->getAllImages();
 
         return $this->twig->render(
             $response,
             'explore.twig',
             [
+                'images' => $images
             ]
         );
     }

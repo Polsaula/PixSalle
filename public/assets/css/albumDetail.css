@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+
+
+.container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(auto-fill);
+    grid-row-gap: .5em;
+    grid-column-gap: 1em;
+}
+  
+
+.cards {
+    display: flex;
+    position: relative;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    height:500px; 
+    max-width:100%;
+}
+
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 97%;
+    height: 97%;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-left: 1.5%;
+    margin-top: 1.5%;
+    transition: transform 0.5s;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.5s ease;
+  }
+  
+  .cards:hover .overlay {
+    display: block;
+    background: rgba(0, 0, 0, .3);
+  }
+
+  
+  .cards button {
+    position: absolute;
+    height: 45px;
+    width: 150px;
+    margin: 10px 75px;
+    padding: 5px 5px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    border: 2px whitesmoke solid;
+    border-radius: 4px;
+    text-transform: uppercase;
+    outline: 0;
+    overflow:hidden;
+    background: white;
+    color: #383736;
+    z-index: 1;
+    cursor: pointer;
+    transition:         0.08s ease-in;
+    -o-transition:      0.08s ease-in;
+    -ms-transition:     0.08s ease-in;
+    -moz-transition:    0.08s ease-in;
+    -webkit-transition: 0.08s ease-in;
+    left:0;
+    top: 180px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+  }
+
+  .actionButtonsAlbum{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    flex-direction: row;
+  }
+  
+  
+  .cards:hover button {
+    opacity:1;  
+  }
+  
+  .fill:hover {
+    color: whitesmoke;
+  }
+  
+  .fill:before {
+    content: "";
+    position: absolute;
+    background: #383736;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: -1;
+    -webkit-transition: top 0.09s ease-in;
+  }
+  
+  .fill:hover:before {
+    top: 0;
+  }
+  
+  
+
+
+.cards .card-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 20px 40px -14px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
+
+    position:relative;
+    margin: 0 auto;
+}
+
+.cards .card-info {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 1rem;
+    line-height: 1.5em;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards .card-title {
+    font-size: 25px;
+    line-height: 1.1em;
+    color: #32325d;
+    margin-bottom: 0.2em;
+}
+
+.cards .card-image{
+    max-height:100%; 
+    max-width:100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 6px 6px 0px 0px;
+    opacity: 0.91;
+}
+
+.album-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*margin-bottom: 150px;*/
+}
+
+.album-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.album-details h1{
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.album-details button {
+    margin: 20px;
+    outline: none;
+  }
+
+
+.actionAlbumBtn {
+    width: 130px;
+    height: 40px;
+    padding: 10px 25px;
+    border: 2px solid #000;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.btnAlbum {
+    background: #000;
+    color: #fff;
+    line-height: 42px;
+    padding: 0;
+    border: none;
+}
+.btnAlbum span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.btnAlbum:before,
+.btnAlbum:after {
+    position: absolute;
+    content: "";
+    height: 0%;
+    width: 2px;
+    background: #000;
+}
+.btnAlbum:before {
+    right: 0;
+    top: 0;
+    transition: all 500ms ease;
+}
+.btnAlbum:after {
+    left: 0;
+    bottom: 0;
+    transition: all 500ms ease;
+}
+.btnAlbum:hover{
+    color: #000;
+    background: transparent;
+}
+.btnAlbum:hover:before {
+    transition: all 500ms ease;
+    height: 100%;
+}
+.btnAlbum:hover:after {
+    transition: all 500ms ease;
+    height: 100%;
+}
+.btnAlbum span:before,
+.btnAlbum span:after {
+    position: absolute;
+    content: "";
+    background: #000;
+}
+.btnAlbum span:before {
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 2px;
+    transition: all 500ms ease;
+}
+.btnAlbum span:after {
+    right: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    transition: all 500ms ease;
+}
+.btnAlbum span:hover:before {
+    width: 100%;
+}
+.btnAlbum span:hover:after {
+    width: 100%;
+}
+  
+
+
