@@ -1,58 +1,274 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 body {
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto", sans-serif !important;
 }
 
-.shadow {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+.entry {
+	-webkit-flex-basis: calc(50% - 6px);
+	-ms-flex-preferred-size: calc(50% - 6px);
+	flex-basis: calc(50% - 6px);
 }
 
-.profile-tab-nav {
-    min-width: 250px;
+.entry {
+	-webkit-flex-basis: calc(33.333333% - 12px);
+	-ms-flex-preferred-size: calc(33.333333% - 12px);
+	flex-basis: calc(33.333333% - 12px);
+}
+.card {
+	color: #696761;
+}
+.page-blog .entry, .page-search .entry {
+	margin-bottom: 24px;
+}
+/* @media all and (min-width:600px) */
+.page-blog .entry, .page-search .entry {
+	margin-bottom: 48px;
+}
+.row {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 1 100%;
+	-ms-flex: 1 1 100%;
+	flex: 1 1 100%;
+}
+.contain {
+	padding-right: 16px;
+	padding-left: 16px;
+}
+/* @media all and (min-width:768px) */
+.contain-medium {
+	padding-right: 24px;
+	padding-left: 24px;
+}
+.between {
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+.pt4 {
+	padding-top: 24px;
+}
+.pb4 {
+	padding-bottom: 24px;
+}
+/* @media all and (min-width:600px) */
+.pt6-b {
+	padding-top: 48px;
+}
+/* @media all and (min-width:600px) */
+.pb6-b {
+	padding-bottom: 48px;
 }
 
-.tab-content {
-    flex: 1;
+
+.db {
+	display: block;
+}
+.meta {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	font-family: Averta,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+	font-weight: 600;
+	line-height: 1.1428;
+	font-size: 10px;
+	color: #92918b;
+}
+/* @media all and (min-width:600px) */
+.meta {
+	font-size: 12px;
+}
+.mb2 {
+	margin-bottom: 12px;
+}
+/* @media all and (min-width:600px) */
+.mb4-b {
+	margin-bottom: 24px;
+}
+.card-body {
+	position: relative;
 }
 
-.form-group {
-    margin-bottom: 1.5rem;
+/* mixin for multiline */
+.block-with-text {
+	overflow: hidden;
+	position: relative;
+	line-height: 1.2em;
+	max-height: 6em;
+	text-align: justify;
+	padding-right: 1em;
+	color: black;
+  }
+  .block-with-text:before {
+	content: '...';
+	position: absolute;
+	right: 0;
+	bottom: 0;
+  }
+  .block-with-text:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	width: 1em;
+	height: 1em;
+	margin-top: 0.2em;
+	background: white;
+  }
+
+.dashes {
+	background: url('/assets/images/dash-neutral-l1.svg?1472295234') repeat-x left calc(50% + 1px);
 }
 
-.nav-pills a.nav-link {
-    padding: 15px 20px;
-    border-bottom: 1px solid #ddd;
-    border-radius: 0;
-    color: #333;
+.primary {
+	color: #071112;
 }
-.nav-pills a.nav-link i {
-    width: 20px;
-}
-
-.img-circle img {
-    height: 100px;
-    width: 100px;
-    border-radius: 100%;
-    border: 5px solid #fff;
+.primary a{
+	font-weight: bold;
+	font-size: 20px;
+	transition: 0.5s;
 }
 
-button {
-    background: #fff;
-    color: #071112 !important;
-    display: inline-block;
-    padding: 10px 36px;
-    font-family: "Playfair Display", serif;
-    font-size: 14px;
-    font-weight: 400;
-    border: 1px solid #071112;
-    letter-spacing: 3px;
-    text-align: center;
-    text-transform: uppercase;
-    cursor: pointer;
+.primary a:hover{
+	font-size: 23px;
+	color: black;
+}
+.mb1 {
+	margin-bottom: 6px;
+}
+.f5 {
+	font-size: 16px;
+}
+/* @media all and (min-width:600px) */
+.f4-b {
+	font-size: 18px;
 }
 
-button:hover {
-    background: #071112;
-    color: #fff !important;
-    border: 1px solid #071112;
+.screen-reader-text, .visuallyhidden {
+	border: 0 !important;
+	clip: rect(0px, 0px, 0px, 0px);
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	position: absolute !important;
+	width: 1px !important;
+	padding: 0 !important;
+	top: 0px !important;
+	left: 0px !important;
+}
+.link-icon {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+.icon-right {
+	padding-left: 6px;
+}
+
+.fill-currentcolor {
+	fill: currentColor;
+}
+.fill-secondary, .fill-secondary svg {
+	fill: #31bd93;
+}
+.icon {
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-content: center;
+	-ms-flex-line-pack: center;
+	align-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+.icon, .icon svg {
+	-webkit-transition: .2s;
+	transition: .2s;
+}
+.link-icon .icon {
+	position: relative;
+	top: 1px;
+	-webkit-transition: .2s ease;
+	transition: .2s ease;
+}
+.icon-medium svg {
+	width: 1em;
+}
+.card-small .card-image img, .card-medium .card-image img {
+	border-radius: 6px;
+}
+
+
+.blog-page {  
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	grid-template-rows: 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+	  "entries info";
+  }
+  
+.entries {  
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fill);
+    grid-row-gap: .5em;
+    grid-column-gap: 1em;
+	grid-auto-flow: row;
+	grid-area: entries;
+}
+
+.blog-container h2{
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+}
+  
+.info { 
+	background-color: red;
+	grid-area: info; 
+}
+
+.entry-description{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.entry-description  p{
+	color: black;
+}
+  
+.entry-description a{
+	color: black;
+}
+
+.entry-description a:hover{
+	color: black;
+	text-decoration: underline;
 }

@@ -14,7 +14,9 @@ use Salle\PixSalle\Controller\ProfileController;
 use Salle\PixSalle\Controller\SignUpController;
 use Salle\PixSalle\Controller\UserSessionController;
 use Salle\PixSalle\Controller\WalletController;
+use Salle\PixSalle\Repository\BlogRepository;
 use Salle\PixSalle\Repository\ImageRepository;
+use Salle\PixSalle\Repository\MySQLBlogRepository;
 use Salle\PixSalle\Repository\MySQLImageRepository;
 use Salle\PixSalle\Repository\MySQLUserRepository;
 use Salle\PixSalle\Controller\PwdController;
@@ -64,6 +66,10 @@ $container->set(ImageRepository::class, function (ContainerInterface $container)
     return new MySQLImageRepository($container->get('db'));
 });
 
+$container->set(BlogRepository::class, function (ContainerInterface $container) {
+    return new MySQLBlogRepository($container->get('db'));
+});
+
 $container->set(
     HomeController::class,
     function (ContainerInterface $c) {
@@ -95,7 +101,7 @@ $container->set(
 $container->set(
     BlogController::class,
     function (ContainerInterface $c) {
-        return new BlogController($c->get('view'), $c->get(UserRepository::class));
+        return new BlogController($c->get('view'), $c->get(UserRepository::class), $c->get(BlogRepository::class));
     }
 );
 

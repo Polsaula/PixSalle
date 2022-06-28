@@ -13,4 +13,10 @@ interface ImageRepository {
     public function createAlbum(int $id, string $title): void;
     public function getPortfolioById(int $portfolioId);
     public function getAlbumById(int $albumID);
+    public function getUserById(int $userID);
+    public function getAlbumImages(int $id);
+    public function createImage(int $albumId, string $link);
+    public function deleteImage(int $imageId);
+    public function deleteAlbum(int $albumID);
+    public function getAllImages();
 }

@@ -50,6 +50,11 @@ $app->get(
 )->setName('blog');
 
 $app->get(
+    '/blog/{id}',
+    BlogController::class . ':showBlogDetail'
+)->setName('blog');
+
+$app->get(
     '/profile',
     ProfileController::class . ':showProfile'
 )->setName('home')->add(LoginMiddleware::class);
