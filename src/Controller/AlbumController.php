@@ -60,7 +60,7 @@ final class AlbumController {
 
         $data = array(
             'symbology' => 'QRCode',
-            'code' => 'http://localhost:8030/portfolio/album/'.$albumId,
+            'code' => 'http://localhost:8030/portfolio/album/'. $albumId,
             'dpi' => 300,
             'height' => 300,
             'width' => 300,
@@ -77,7 +77,8 @@ final class AlbumController {
         );
 
         $context  = stream_context_create( $options );
-        $url = "https://barcodeprowebapi.azurewebsites.net/BarcodeGenerator";
+        //Hauria de ser http://barcode:80/BarcodeGenerator
+        $url = "https://baracodeprowebapi.azurewebsites.net/BarcodeGenerator";
         $resposta = file_get_contents( $url, false, $context );
 
         file_put_contents("assets/img/barcodes/$albumId.png", $resposta);

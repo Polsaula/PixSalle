@@ -68,7 +68,7 @@
                         {% if session.picture is defined %}
                           <a href="/profile"><img src="uploads/{{ session.picture }}" width="40" style="margin-right: 10px">Hi, {{ session.username }}!</a>
                         {% else %}
-                            <a href="/profile"><img src="uploads/default.png" width="40" style="margin-right: 10px">Hi, {{ session.username }}!</a>
+                            <a href="/profile"><img src="{{ full_url_for('home') }}uploads/default.png" width="40" style="margin-right: 10px">Hi, {{ session.username }}!</a>
                         {% endif %}
                         <ul class="submenu">
                           <li><a href="/profile">Profile</a></li>
@@ -113,10 +113,11 @@
 
     <div class="footer-copy-right text-center">
       <p style="margin-bottom: 0; color: white">Copyright &copy;<script>document.write(new Date().getFullYear());</script> PixSalle | All rights reserved</p>
+      <p style="margin-bottom: 0; color: white">By Pol Saula</p>
+
     </div>
 
-  {% block footer %}
-  {% endblock %}
+  {% block footer %}{% endblock %}
 </footer>
 
 <div id="back-top" >
